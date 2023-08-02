@@ -1,5 +1,3 @@
-setwd("C:/Users/junhw/OneDrive - The Pennsylvania State University/R")
-
 library(igraph)
 library(sna)
 library(statnet)
@@ -12,7 +10,7 @@ library(latticeExtra)
 
 ## 1.1. loading node attribute data
 
-node_info <- read.csv("endow-BD/primary-sources/data/BD_SharingUnit_JH_R.csv", header=TRUE, fileEncoding="UTF-8-BOM")
+node_info <- read.csv("https://raw.githubusercontent.com/JoonHwang-psu/ENDOW_BD_ERGM_PNAS/main/BD_SharingUnit_JH_R.csv", header=TRUE, fileEncoding="UTF-8-BOM")
 node_info$name <- as.character(node_info$name)
 node_info$logwealth <- log(node_info$WEALTH_TOTAL_VAL_USD, base=10)
 node_info$head_age_sq <- node_info$head_age^2
@@ -27,14 +25,14 @@ stargazer(descript_node, summary=TRUE, digits=2,
 ## 1.2. adjacency matrix
 
 ### creating kinhsip network adjacency matrix
-kin_edgelist<-read.csv("endow-BD/primary-sources/data/BD_Edgelist_kinship_JH.csv", header=TRUE)
+kin_edgelist<-read.csv("https://raw.githubusercontent.com/JoonHwang-psu/ENDOW_BD_ERGM_PNAS/main/BD_Edgelist_kinship_JH.csv", header=TRUE)
 write.csv(as.matrix(get.adjacency(graph.data.frame(kin_edgelist, directed=FALSE))), file = "endow-BD/primary-sources/data/BD_adjmatrix_kinship_JH.csv", row.names = TRUE)
 kin_adjmatrix<-read.csv("endow-BD/primary-sources/data/BD_adjmatrix_kinship_JH.csv", header=TRUE, row.names=1)
 kin_adjmatrix <-as.matrix(kin_adjmatrix)
 diag(kin_adjmatrix)<-0
 
 ### creating financial support network adjacency matrix
-cash_edgelist<-read.csv("endow-BD/primary-sources/data/BD_Edgelist_Q1Q2_no_ext_JH.csv", header=TRUE)
+cash_edgelist<-read.csv("https://raw.githubusercontent.com/JoonHwang-psu/ENDOW_BD_ERGM_PNAS/main/BD_Edgelist_Q1Q2_no_ext_JH.csv", header=TRUE)
 cash_graph_proto <- graph.data.frame(cash_edgelist, directed=TRUE)
 cash_graph_proto <- cash_graph_proto + vertex("BDSU044") #adding vertex with 0 edge (not represented in adjacency matrix)
 write.csv(as.matrix(get.adjacency(cash_graph_proto)), file = "endow-BD/primary-sources/data/BD_adjmatrix_Q1Q2_no_ext_JH.csv", row.names = TRUE)
@@ -43,7 +41,7 @@ cash_adjmatrix <-as.matrix(cash_adjmatrix)
 diag(cash_adjmatrix)<-0 #deleting self-loops
 
 ### creating material support network adjacency matrix
-material_edgelist<-read.csv("endow-BD/primary-sources/data/BD_Edgelist_Q3Q4_no_ext_JH.csv", header=TRUE)
+material_edgelist<-read.csv("https://raw.githubusercontent.com/JoonHwang-psu/ENDOW_BD_ERGM_PNAS/main/BD_Edgelist_Q3Q4_no_ext_JH.csv", header=TRUE)
 material_graph_proto <- graph.data.frame(material_edgelist, directed=TRUE)
 material_graph_proto <- material_graph_proto + vertex("BDSU044")
 write.csv(as.matrix(get.adjacency(material_graph_proto)), file = "endow-BD/primary-sources/data/BD_adjmatrix_Q3Q4_no_ext_JH.csv", row.names = TRUE)
@@ -52,7 +50,7 @@ material_adjmatrix <-as.matrix(material_adjmatrix)
 diag(material_adjmatrix)<-0
 
 ### creating labor support network adjacency matrix (inverse)
-inv_help_edgelist<-read.csv("endow-BD/primary-sources/data/BD_Edgelist_Q5Q6_no_ext_JH.csv", header=TRUE)
+inv_help_edgelist<-read.csv("https://raw.githubusercontent.com/JoonHwang-psu/ENDOW_BD_ERGM_PNAS/main/BD_Edgelist_Q5Q6_no_ext_JH.csv", header=TRUE)
 write.csv(as.matrix(get.adjacency(graph.data.frame(inv_help_edgelist, directed=TRUE))), file = "endow-BD/primary-sources/data/BD_adjmatrix_Q5Q6_no_ext_JH(inv).csv", row.names = TRUE)
 inv_help_adjmatrix<-read.csv("endow-BD/primary-sources/data/BD_adjmatrix_Q5Q6_no_ext_JH(inv).csv", header=TRUE, row.names=1)
 inv_help_adjmatrix <-as.matrix(inv_help_adjmatrix)
