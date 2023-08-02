@@ -15,15 +15,9 @@ library(latticeExtra)
 node_info <- read.csv("endow-BD/primary-sources/data/BD_SharingUnit_JH_R.csv", header=TRUE, fileEncoding="UTF-8-BOM")
 node_info$name <- as.character(node_info$name)
 node_info$logwealth <- log(node_info$WEALTH_TOTAL_VAL_USD, base=10)
-node_info$wealth1000 <- (node_info$WEALTH_TOTAL_VAL_USD)/1000
-node_info$CPratio <- node_info$prod/node_info$HH_size
 node_info$head_age_sq <- node_info$head_age^2
 
-hist(node_info$WEALTH_TOTAL_VAL_USD)
-hist(node_info$logwealth)
-
-xtabs(node_info$salaried, node_info$Status)
-
+### creating descriptive statistics of HH demography
 descript_node <- node_info[,c("HH_size", "head_age", "F_age50plus", "age6under_bin", "WEALTH_TOTAL_VAL_USD", "land", "salaried", "Status")]
 
 stargazer(descript_node, summary=TRUE, digits=2, 
